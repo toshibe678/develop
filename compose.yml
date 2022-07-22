@@ -24,6 +24,23 @@ services:
     tty: true
     stdin_open: true
 
+  postgres:
+    container_name: dev_postgres
+    restart: always
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+      args:
+        - DB_LANG=ja_JP
+    env_file: ./.env
+    command: 'postgres -c config_file="/etc/postgresql.conf"'
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/postgresql.conf:/etc/postgresql.conf
+    ports:
+      - "5432:5432"
+
+
 #configs:
 #  my_config:
 #    file: ./my_config.txt
