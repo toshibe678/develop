@@ -1,0 +1,33 @@
+services:
+#  app1:
+#    image: awesome/webapp
+#    configs:
+#      - my_config
+#    secrets:
+#      - server-certificate
+#
+#  app2:
+#    image: awesome/database
+#    extends:
+#      service: app1
+  go:
+    container_name: "dev_go"
+    restart: always
+    build:
+      context: ./go
+      dockerfile: Dockerfile
+    env_file: ./.env
+    working_dir: /go/src/work
+    command: /bin/bash
+    volumes:
+      - ./go:/go/src/work
+    tty: true
+    stdin_open: true
+
+#configs:
+#  my_config:
+#    file: ./my_config.txt
+#
+#secrets:
+#  server-certificate:
+#    file: ./server.cert
