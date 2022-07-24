@@ -24,6 +24,21 @@ services:
     tty: true
     stdin_open: true
 
+  node:
+    container_name: dev_node
+    restart: always
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    env_file: ./.env
+    init: true
+    volumes:
+      - ./node:/app
+    ports:
+      - 3000:3000
+    tty: true
+    stdin_open: true
+
   postgres:
     container_name: dev_postgres
     restart: always
@@ -36,7 +51,9 @@ services:
       - postgres:/var/lib/postgresql/data
       - ./postgres/postgresql.conf:/etc/postgresql.conf
     ports:
-      - "5432:5432"
+      - 5432:5432
+    tty: true
+    stdin_open: true
 
   mysql:
     container_name: dev_mysql
@@ -51,6 +68,8 @@ services:
       - mysql:/var/lib/mysql
     ports:
       - 3306:3306
+    tty: true
+    stdin_open: true
 
   redis:
     container_name: dev_redis
@@ -62,6 +81,8 @@ services:
       - redis:/data
     ports:
       - 6379:6379
+    tty: true
+    stdin_open: true
 
 volumes:
   postgres:

@@ -1,0 +1,8 @@
+{
+  "name": "develop_node",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}
