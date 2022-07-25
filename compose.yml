@@ -34,8 +34,18 @@ services:
     init: true
     volumes:
       - ./node:/app
-    ports:
-      - 3000:3000
+    tty: true
+    stdin_open: true
+
+  python:
+    container_name: dev_python
+    restart: always
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    env_file: ./.env
+    volumes:
+      - ./python:/app
     tty: true
     stdin_open: true
 
