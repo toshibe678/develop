@@ -23,3 +23,11 @@ status:
 .PHONY: log
 log:
 	@docker compose logs -f
+
+.PHONY: recreate
+recreate:
+	@docker compose up -d --force-recreate
+
+.PHONY: config_check
+config_check:
+	@docker compose config
