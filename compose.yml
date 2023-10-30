@@ -1,15 +1,15 @@
 services:
-#  app1:
-#    image: awesome/webapp
-#    configs:
-#      - my_config
-#    secrets:
-#      - server-certificate
-#
-#  app2:
-#    image: awesome/database
-#    extends:
-#      service: app1
+  #  app1:
+  #    image: awesome/webapp
+  #    configs:
+  #      - my_config
+  #    secrets:
+  #      - server-certificate
+  #
+  #  app2:
+  #    image: awesome/database
+  #    extends:
+  #      service: app1
   go:
     container_name: dev_go
     restart: always
@@ -20,7 +20,8 @@ services:
     working_dir: /go/src/work
     command: /bin/bash
     volumes:
-      - ./go:/go/src/work
+#      - ./go:/go/src/work
+      - ../scripts/go:/go/src/work
     tty: true
     stdin_open: true
 
@@ -34,6 +35,7 @@ services:
     init: true
     volumes:
       - ./node:/app
+      - ../scripts:/scripts
     tty: true
     stdin_open: true
 
@@ -46,6 +48,7 @@ services:
     env_file: ./.env
     volumes:
       - ./python:/app
+      - ../scripts:/scripts
     tty: true
     stdin_open: true
 
