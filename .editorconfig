@@ -1,0 +1,33 @@
+# ルートの設定（.editorconfigはプロジェクトのルートに置くと良いです）
+root = true
+# 改行コードと改行後ろの空白削除の有無を指定したい。文字コードも。
+[*]
+# インデントスタイル
+indent_style = space
+# Use Unix line endings
+end_of_line = lf
+# Each indent should contain 2 spaces
+indent_size = 2
+# A file must end with an empty line - this is good for version control systems
+insert_final_newline = true
+# The files are utf-8 encoded
+charset = utf-8
+# No whitespace at the end of line
+trim_trailing_whitespace = true
+# A line should not have more than this amount of chars (not supported by all plugins)
+max_line_length = 300
+# jsの設定
+[{*.js, *.ts, *.tsx, *.json}]
+indent_size = 2
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
+indent_size = 4
+
+[*.go]
+indent_style = tab
