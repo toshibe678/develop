@@ -1,5 +1,8 @@
 export COMPOSE_HTTP_TIMEOUT := 300
 
+# makefile内のすべてのコマンドが単一のシェルスクリプトで実行されるようになるおまじない
+.ONESHELL:
+
 .PHONY: build
 build:
 	@docker compose build
