@@ -44,6 +44,7 @@ services:
     tty: true
     stdin_open: true
 
+# データベース系--------------------------------------------------
   postgres:
     container_name: dev_postgres
     restart: always
@@ -53,7 +54,7 @@ services:
     env_file: ./.env
     command: 'postgres -c config_file="/etc/postgresql.conf"'
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ./db_data/postgres:/var/lib/postgresql/data
       - ./postgres/postgresql.conf:/etc/postgresql.conf
     ports:
       - 5432
@@ -70,12 +71,13 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./mysql/conf:/etc/mysql/conf.d
-      - mysql:/var/lib/mysql
+      - ./db_data/mysql:/var/lib/mysql
     ports:
       - 3306
     tty: true
     stdin_open: true
 
+# キャッシュ系--------------------------------------------------
   redis:
     container_name: dev_redis
     restart: always
@@ -83,19 +85,12 @@ services:
       context: ./redis
       dockerfile: Dockerfile
     volumes:
-      - redis:/data
+      - ./db_data/redis:/data
     ports:
       - 6379
     tty: true
     stdin_open: true
 
-volumes:
-  postgres:
-    driver: local
-  mysql:
-    driver: local
-  redis:
-    driver: local
 #configs:
 #  my_config:
 #    file: ./my_config.txt
