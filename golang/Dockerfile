@@ -11,8 +11,8 @@ RUN apt-get update \
     && apt-get -y install vim git curl wget zip unzip procps time \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /go/src/work
-COPY ./ ./
+#WORKDIR /go/src/work
+#COPY ./ ./
 
 # install go tools（自動補完等に必要なツールをコンテナにインストール）
 #RUN go install github.com/uudashr/gopkgs/v2/cmd/gopkgs
@@ -25,5 +25,3 @@ COPY ./ ./
 #  github.com/go-delve/delve/cmd/dlv \
 #  golang.org/x/lint/golint \
 #  golang.org/x/tools/gopls
-
-ENTRYPOINT [ "go", "run", "main.go" ]

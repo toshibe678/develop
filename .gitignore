@@ -1,0 +1,9 @@
+# golangのダウンロードしたパッケージ
+golang/pkg/**
+!golang/pkg/**/
+!golang/pkg/**/.gitkeep
+
+# golangのビルドしたバイナリ
+golang/bin/**
+!golang/bin/**/
+!golang/bin/**/.gitkeep

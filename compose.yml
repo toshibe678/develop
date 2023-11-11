@@ -1,27 +1,19 @@
 services:
-  #  app1:
-  #    image: awesome/webapp
-  #    configs:
-  #      - my_config
-  #    secrets:
-  #      - server-certificate
-  #
-  #  app2:
-  #    image: awesome/database
-  #    extends:
-  #      service: app1
-  go:
-    container_name: dev_go
+# 言語系--------------------------------------------------
+  golang:
+    container_name: golang_develop
     restart: always
+    working_dir: /go/src/app
     build:
-      context: ./go
+      context: golang
       dockerfile: Dockerfile
     env_file: ./.env
-    working_dir: /go/src/work
-    command: /bin/bash
+    ports:
+      - 8080:80
     volumes:
-#      - ./go:/go/src/work
-      - ../scripts/go:/go/src/work
+      - type: bind
+        source: "./golang"
+        target: "/go/"
     tty: true
     stdin_open: true
 
