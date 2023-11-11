@@ -12,3 +12,6 @@ golang/pkg/**
 golang/bin/**
 !golang/bin/**/
 !golang/bin/**/.gitkeep
+
+# nodeのダウンロードしたパッケージ
+node/node_modules/**
