@@ -52,7 +52,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}/develop:latest
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           cache-from: type=local,src=/tmp/.buildx-cache
