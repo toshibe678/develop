@@ -5,13 +5,11 @@ services:
     restart: always
     working_dir: /src/app
     image: ghcr.io/toshibe678/develop/develop:latest
-#    build:
-#      context: ./
-#      dockerfile: Dockerfile
     env_file: ./.env
     ports:
       - 8080:80
-#    volumes:
+    volumes:
+      - ../golang:/src/app/go
 #      - type: bind
 #        source: "../golang"
 #        target: "/src/app/go/"
