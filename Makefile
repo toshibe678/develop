@@ -1,36 +1,40 @@
-export COMPOSE_HTTP_TIMEOUT := 300
+export COMPOSE_HTTP_TIMEOUT := 500
 
 # makefile内のすべてのコマンドが単一のシェルスクリプトで実行されるようになるおまじない
 .ONESHELL:
 
-.PHONY: build
+.PHONY: up build ps restart log recreate config_check node dev
+setup:
+	@make build
+	@make up
+	@make ps
+
 build:
-	@docker compose build
+	docker compose build
 
-.PHONY: up
 up:
-	@docker compose up -d
+	docker compose up -d
 
-.PHONY: restart
 restart:
-	@docker compose restart
+	docker compose restart
 
-.PHONY: del
-del:
-	@docker compose down
+d:
+	docker compose down
 
-.PHONY: status
-status:
-	@docker compose ps
+ps:
+	docker compose ps
 
-.PHONY: log
 log:
-	@docker compose logs -f
+	docker compose logs -f
 
-.PHONY: recreate
 recreate:
-	@docker compose up -d --force-recreate
+	docker compose up -d --force-recreate
 
-.PHONY: config_check
 config_check:
-	@docker compose config
+	docker compose config
+
+node:
+	docker compose exec node bash
+
+dev:
+	docker compose exec -it dev bash

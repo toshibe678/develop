@@ -1,6 +1,6 @@
 services:
 # 言語系--------------------------------------------------
-  dev:
+  develop:
     container_name: develop
     restart: always
     working_dir: /src/app
@@ -29,8 +29,8 @@ services:
     env_file: ./.env
     command: 'postgres -c config_file="/etc/postgresql.conf"'
     volumes:
-      - ./db_data/postgres:/var/lib/postgresql/data
-      - ./postgresql.conf:/etc/postgresql.conf
+      - ../db_data/postgres:/var/lib/postgresql/data
+      - ../postgresql.conf:/etc/postgresql.conf
     ports:
       - 5432
     tty: true
@@ -43,8 +43,8 @@ services:
     env_file: ./.env
     command: --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./db_data/mysql:/var/lib/mysql
+      - ../my.cnf:/etc/mysql/conf.d/my.cnf
+      - ../db_data/mysql:/var/lib/mysql
     ports:
       - 3306
     tty: true
@@ -56,7 +56,7 @@ services:
     restart: always
     image: redis:6
     volumes:
-      - ./db_data/redis:/data
+      - ../db_data/redis:/data
     ports:
       - 6379
     tty: true

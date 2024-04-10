@@ -15,9 +15,9 @@ services:
       - type: bind
         source: "./golang"
         target: "/src/app/go/"
-      - ./python:/app
-      - ../scripts:/scripts
-      - ./node:/app
+#      - ./python:/app
+#      - ../scripts:/scripts
+#      - ./node:/app
     tty: true
     stdin_open: true
 
