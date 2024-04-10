@@ -9,6 +9,7 @@ on:
       - main
     paths:
       - "Dockerfile"
+      - ".github/workflows/contener-build.yml"
 
 jobs:
   tools_push_to_registry:
