@@ -11,10 +11,10 @@ services:
     env_file: ./.env
     ports:
       - 8080:80
-    volumes:
-      - type: bind
-        source: "../golang"
-        target: "/src/app/go/"
+#    volumes:
+#      - type: bind
+#        source: "../golang"
+#        target: "/src/app/go/"
 #      - ./python:/app
 #      - ../scripts:/scripts
 #      - ./node:/app
