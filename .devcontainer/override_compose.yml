@@ -1,0 +1,3 @@
+services:
+  develop:
+    env_file: ./.env

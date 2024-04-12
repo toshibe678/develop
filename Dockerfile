@@ -30,6 +30,7 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 # don't auto-upgrade the gotoolchain
 # https://github.com/docker-library/golang/issues/472
 ENV GOTOOLCHAIN=local
+ENV GO111MODULE=auto
 
 # コンテナのデバッグ等で便利なソフト導入しておく
 RUN apt-get update && \
