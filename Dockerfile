@@ -107,6 +107,10 @@ RUN apt-get update && \
     pipx install --include-deps ansible-lint awscli uv && \
     pipx install --include-deps pandas xlrd pandas-datareader flake8 black mypy pytest
 
+# Python の Package Manager として Rust 製の rye をインストール
+RUN curl -sSf https://rye-up.com/get | RYE_INSTALL_OPTION="--yes" bash \
+	&& echo 'source "$HOME/.rye/env"' >> ~/.bashrc
+
 # nodebrew + nodejs
 # node version: https://nodejs.org/en/download/releases/
 ENV NODE_VERSION 20.12.1

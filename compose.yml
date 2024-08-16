@@ -13,9 +13,9 @@ services:
       - 8080:80
     volumes:
       - ./golang:/src/app/go
-#      - ./python:/app
+#      - ./python:/app1
 #      - ../scripts:/scripts
-#      - ./node:/app
+#      - ./node:/app1
     tty: true
     stdin_open: true
 

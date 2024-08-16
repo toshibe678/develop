@@ -28,3 +28,9 @@ go mod init sample
 go run .
 go build
 ```
+
+各appディレクトリで以下でアプリごとのビルド
+go build -buildvcs=false
+
+srcで以下ですべてインストール
+go install -buildvcs=false  ./...
