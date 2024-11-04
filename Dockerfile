@@ -101,7 +101,7 @@ ENV PATH /src/app/.local/bin:$PATH
 RUN apt-get update && \
     apt-get -y install pipx && \
     rm -rf /var/lib/apt/lists/* && \
-    pipx install --include-deps ansible-lint awscli uv && \
+    pipx install --include-deps ansible-lint uv && \
     pipx install --include-deps pandas xlrd pandas-datareader flake8 black mypy pytest awscli
 
 # nodebrew + nodejs
@@ -134,7 +134,40 @@ RUN arch=$(uname -m) && \
     ./aws/install && \
     rm -rf aws aws-cli.zip
 
+# terraform
+# 最新バージョン確認：https://www.terraform.io/downloads.html
+ARG terraform_version=1.9.8
+ENV TERRAFORM_VERSION=${terraform_version}
+RUN apt-get update \
+    && apt-get -y install zip \
+    && rm -rf /var/lib/apt/lists/* \
+    && if [ $(uname -m) = "x86_64" ]; then \
+          arch="amd64"; \
+      else \
+          arch="arm64"; \
+      fi \
+    && wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${arch}.zip" \
+    && unzip "terraform_${TERRAFORM_VERSION}_linux_${arch}.zip" \
+    && mv terraform /bin \
+    && rm "terraform_${TERRAFORM_VERSION}_linux_${arch}.zip"
 
+# tflintを使えるようにする
+# 最新バージョン確認：https://github.com/terraform-linters/tflint/releases/
+ARG tflint_version=0.53.0
+ENV TFLINT_VERSION=${tflint_version}
+RUN  if [ $(uname -m) = "x86_64" ]; then \
+              arch="amd64"; \
+          else \
+              arch="arm64"; \
+          fi \
+    && wget https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${arch}.zip -O tflint.zip \
+    && unzip tflint.zip -d /bin \
+    && rm tflint.zip
 
 WORKDIR /src/app
 CMD ["/bin/bash"]
+COPY ./.terraformrc /root/.terraformrc
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
