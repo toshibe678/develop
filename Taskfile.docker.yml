@@ -1,0 +1,72 @@
+version: '3'
+
+vars: { COMPOSE_HTTP_TIMEOUT: 500 }
+
+tasks:
+  exec:
+    desc: exec container
+    cmds:
+      - docker compose exec -it dev bash
+
+  build:
+    desc: build image
+    cmds:
+      - docker compose build
+
+  push:
+    desc: push image
+    cmds:
+      - echo "TODO push"
+
+  start:
+    desc: start container
+    cmds:
+      - docker compose watch -d
+
+  stop:
+    desc: stop container
+    cmds:
+      - docker compose stop
+
+  down:
+    desc: delete container
+    cmds:
+      - docker compose down
+
+  prune:
+    desc: stop container
+    cmds:
+      - docker system prune -a -f --filter "until=24h"
+      - docker system prune --volumes -f
+
+  setup:
+    desc: stop container
+    cmds:
+      - task docker:build
+      - task docker:start
+      - task docker:build
+
+  restart:
+    desc: restart container
+    cmds:
+      - docker compose restart
+
+  recreate:
+    desc: recreate container
+    cmds:
+      - docker compose up -d --force-recreate
+
+  ps:
+    desc: ps container
+    cmds:
+      - docker compose ps
+
+  log:
+    desc: log tail container
+    cmds:
+      - docker compose logs -f
+
+  config_check:
+    desc: log tail container
+    cmds:
+      - docker compose config

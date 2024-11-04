@@ -4,18 +4,25 @@ services:
     container_name: develop
     restart: always
     working_dir: /src/app
-    image: ghcr.io/toshibe678/develop/develop:latest
-#    build:
-#      context: ./
-#      dockerfile: Dockerfile
+#    image: ghcr.io/toshibe678/develop/develop:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
     env_file: ./.env
     ports:
       - 8080:80
     volumes:
       - ./golang:/src/app/go
-#      - ./python:/app1
-#      - ../scripts:/scripts
-#      - ./node:/app1
+      - ./python:/app1
+      - ../scripts:/scripts
+      - ./node:/app1
+#    develop:
+#      watch:
+#        - action: sync
+#          path: ./golang
+#          target: /src/app/go
+#        - action: rebuild
+#          path: ./package.json
     tty: true
     stdin_open: true
 
