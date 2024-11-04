@@ -20,7 +20,7 @@ concurrency:
 jobs:
   tools_push_to_registry:
     name: Push Docker image to Packages
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
