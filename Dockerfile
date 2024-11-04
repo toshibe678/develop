@@ -23,9 +23,6 @@ RUN apt-get update && \
     wget \
     zip \
     unzip \
-    net-tools \
-    iproute2 \
-    iputils-ping \
     ansible \
     && rm -rf /var/lib/apt/lists/*
 
@@ -45,8 +42,6 @@ RUN apt-get update && \
     nicstat \
     ethtool \
     tiptop \
-    cpuid \
-    msr-tools \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /src/app/go
