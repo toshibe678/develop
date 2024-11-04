@@ -1,0 +1,25 @@
+# 使いかたの詳細：　https://taskfile.dev/usage/
+version: '3'
+
+# 他のtaskfileをインクルードすることができる
+includes:
+  docker: ./Taskfile.docker.yml
+
+# 定数定義
+vars: { MESSAGE: 'Hello' }
+
+tasks:
+  # $ task を実行した際に使用できるサブコマンドとdescが表示されるように
+  default:
+    desc: show commands
+    cmds:
+      - task -l --sort none
+  hello:
+    desc: This task says Hello, World!
+    cmds:
+      - echo "{{.MESSAGE}}, World!"
+    vars: { MESSAGE: 'Hello' }
+  cd-ls:
+    dir: ./db_data
+    cmds:
+      - ls

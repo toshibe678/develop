@@ -4,12 +4,24 @@ env:
   LANG: ja_JP.UTF-8
 
 on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - "Dockerfile"
+      - ".github/workflows/contener-build.yml"
   push:
     branches:
+      - develop
       - main
     paths:
       - "Dockerfile"
       - ".github/workflows/contener-build.yml"
+
+# 多重pushした際に古い方のactionsをCancelさせる設定
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   tools_push_to_registry:
@@ -51,7 +63,7 @@ jobs:
           push: true
           context: ./
           file: ./Dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}/develop:latest
           labels: |
