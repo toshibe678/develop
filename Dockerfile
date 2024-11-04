@@ -164,6 +164,21 @@ RUN  if [ $(uname -m) = "x86_64" ]; then \
     && unzip tflint.zip -d /bin \
     && rm tflint.zip
 
+# gcloud
+RUN apt-get update && \
+    apt-get install -y apt-transport-https ca-certificates gnupg && \
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
+    apt-get update && \
+    apt-get install -y google-cloud-sdk \
+    && rm -rf /var/lib/apt/lists/*
+# gcloudの初期設定 使用レポートの無効化とアップデートチェックの無効化
+RUN gcloud config set core/disable_usage_reporting true && \
+    gcloud config set component_manager/disable_update_check true \
+
+# azure CLI
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
 WORKDIR /src/app
 CMD ["/bin/bash"]
 COPY ./.terraformrc /root/.terraformrc
