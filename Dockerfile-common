@@ -1,0 +1,53 @@
+FROM ubuntu:24.04
+
+# set TimeZone
+ARG tz=Asia/Tokyo
+ENV TZ=${tz}
+
+# 日本語環境設定
+RUN apt-get update && \
+    apt-get install -y locales task-japanese && \
+    rm -rf /var/lib/apt/lists/* && \
+    localedef -f UTF-8 -i ja_JP ja_JP
+ENV LC_ALL=ja_JP.UTF-8 \
+    LC_CTYPE=ja_JP.UTF-8 \
+    LANGUAGE=ja_JP:jp \
+    LANG=ja_JP.UTF-8
+
+# コンテナのデバッグ等で便利なソフト導入しておく
+RUN apt-get update && \
+    apt-get -y install \
+    vim \
+    git \
+    curl \
+    wget \
+    zip \
+    unzip \
+    ansible \
+    && rm -rf /var/lib/apt/lists/*
+
+# 調査用ソフトインストール
+RUN apt-get update && \
+    apt-get -y install \
+    procps \
+    util-linux \
+    iputils-ping \
+    net-tools \
+    iproute2 \
+    sysstat \
+    numactl \
+    tcpdump \
+    linux-tools-common \
+    trace-cmd \
+    nicstat \
+    ethtool \
+    tiptop \
+    && rm -rf /var/lib/apt/lists/*
+
+####################################################################################################
+# set Env
+####################################################################################################
+RUN mkdir -p /src/app
+ENV HOME /src/app
+WORKDIR /src/app
+CMD ["/bin/bash"]
