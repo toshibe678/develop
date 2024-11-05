@@ -9,7 +9,7 @@ on:
     branches:
       - main
     paths:
-      - "Dockerfile"
+      - "Dockerfile-tools"
       - ".github/workflows/container-build-tools.yml"
 
 # 多重pushした際に古い方のactionsをCancelさせる設定

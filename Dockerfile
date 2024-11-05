@@ -48,17 +48,17 @@ RUN wget git.io/nodebrew && \
     echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> $HOME/.bashrc && \
     . $HOME/.bashrc && nodebrew install-binary $NODE_VERSION && \
     . $HOME/.bashrc && nodebrew use $NODE_VERSION
-RUN npm update -g npm
-RUN npm install -g \
-    typescript \
-    aws-cdk \
-    textlint \
-    textlint-rule-ja-hiragana-fukushi \
-    textlint-rule-ja-hiragana-hojodoushi \
-    textlint-rule-ja-hiragana-keishikimeishi \
-    textlint-rule-preset-ja-technical-writing \
-    textlint-rule-preset-ja-spacing \
-    textlint-rule-spellcheck-tech-word
+RUN npm update -g npm && \
+    npm install -g \
+        typescript \
+        aws-cdk \
+        textlint \
+        textlint-rule-ja-hiragana-fukushi \
+        textlint-rule-ja-hiragana-hojodoushi \
+        textlint-rule-ja-hiragana-keishikimeishi \
+        textlint-rule-preset-ja-technical-writing \
+        textlint-rule-preset-ja-spacing \
+        textlint-rule-spellcheck-tech-word
 
 # terraform
 # 最新バージョン確認：https://www.terraform.io/downloads.html
