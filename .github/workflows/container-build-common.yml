@@ -1,4 +1,4 @@
-name: Docker image build and push
+name: Common Docker image build and push
 
 env:
   LANG: ja_JP.UTF-8
@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tools_push_to_registry:
+  common_push_to_registry:
     name: Push Docker image to Packages
     runs-on: self-hosted
     permissions:
@@ -40,9 +40,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-common-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-common-buildx-
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
