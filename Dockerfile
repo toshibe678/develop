@@ -38,16 +38,16 @@ RUN apt-get update && \
     pipx install --include-deps ansible-lint uv && \
     pipx install --include-deps pandas xlrd pandas-datareader flake8 black mypy pytest awscli
 
-# nodebrew + nodejs
+# nodejs
 # node version: https://nodejs.org/en/download/releases/
-ARG node_version=22.11.0
+# https://deb.nodesource.com/
+ARG node_version=22.x
 ENV NODE_VERSION=${node_version}
-ENV PATH $HOME/.nodebrew/current/bin:$PATH
-RUN wget git.io/nodebrew && \
-    perl nodebrew setup && \
-    echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> $HOME/.bashrc && \
-    . $HOME/.bashrc && nodebrew install-binary $NODE_VERSION && \
-    . $HOME/.bashrc && nodebrew use $NODE_VERSION
+RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION | bash - && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/* && \
+    npm install -g npm@latest
 RUN npm update -g npm && \
     npm install -g \
         typescript \
