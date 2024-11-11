@@ -42,6 +42,7 @@ RUN apt-get update && \
     nicstat \
     ethtool \
     tiptop \
+    bind9-dnsutils \
     && rm -rf /var/lib/apt/lists/*
 
 ####################################################################################################
