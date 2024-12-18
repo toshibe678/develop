@@ -1,0 +1,34 @@
+[config]
+# モデルはhttps://github.com/Codium-ai/pr-agent/blob/main/pr_agent/algo/__init__.pyを参照
+model = "bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0"
+model_turbo = "bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0"
+fallback_models="bedrock/anthropic.claude-3-5-haiku-20241022-v1:0"
+#model = "amazon.nova-pro-v1:0"
+#model_turbo = "amazon.nova-lite-v1:0"
+#fallback_models="amazon.nova-lite-v1:0"
+
+[pr_reviewer] # /review #
+extra_instructions = "Please use Japanese for everything."
+
+[pr_description] # /describe #
+add_original_user_description = true
+extra_instructions = "Please use Japanese for everything.  Titles should have prefix of commitlint pattern such as `feat:`, `chore:`, `test:`, `fix:`, `ci:`, `docs:` etc"
+
+[pr_code_suggestions] # /improve #
+extra_instructions = "Please use Japanese for everything."
+
+[pr_add_docs] # /add_docs #
+extra_instructions = "Please use Japanese for everything."
+
+[pr_update_changelog] # /update_changelog #
+extra_instructions = "Please use Japanese for everything."
+
+[pr_test] # /test #
+extra_instructions = "Please use Japanese for everything."
+
+[pr_improve_component] # /improve_component #
+extra_instructions = "Please use Japanese for everything."
+
+#[vertexai]
+#vertex_project = "toshiclick"
+#vertex_location = ""
