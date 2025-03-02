@@ -111,7 +111,7 @@ USER $USERNAME
 # set Env
 ####################################################################################################
 ENV HOME /src/app
-RUN chown -R $USERNAME:$USERNAME /src/app
+RUN sudo chown -R $USERNAME:$USERNAME /src/app
 WORKDIR /src/app
 
 ENTRYPOINT ["entrypoint.sh"]
