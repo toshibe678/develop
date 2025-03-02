@@ -98,7 +98,8 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ARG USERNAME=toshi
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-RUN groupadd --gid $USER_GID $USERNAME \
+RUN deluser ubuntu \
+    && groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
     # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
     && apt-get update \
