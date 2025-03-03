@@ -100,12 +100,16 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 RUN deluser ubuntu \
     && groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
     && apt-get update \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && cp /root/.bashrc /home/$USERNAME/.bashrc \
+    && cp /root/.profile /home/$USERNAME/.profile \
+    && cp -r /root/.npm /home/$USERNAME/.npm \
+    && chown -R $USERNAME:$USERNAME /home/$USERNAME/
 USER $USERNAME
 
 ####################################################################################################
