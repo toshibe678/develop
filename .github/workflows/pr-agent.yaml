@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   pr_agent_job:
-    if: ${{ github.event.sender.type != 'Bot' }}
+    if: ${{ github.event.sender.type != 'Bot' && github.event.sender.login != 'dependabot[bot]' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     name: Run pr agent on every pull request, respond to user comments
@@ -21,6 +21,41 @@ jobs:
       issues: write
       pull-requests: write
       contents: write
+    env:
+      INSTRUCTIONS: >-
+        You must always answer in Japanese.必ず日本語で回答してください。
+        Do NOT answer in English.英語で回答しないでください。
+        次の項目について、コードレビューを行ってください。
+        -設計に関する項目
+          -モジュラリティ: 各モジュールが単一の責任を持ち、他のモジュールとの依存関係が最小限であること。
+          -カプセル化: データと操作を適切にカプセル化し、外部からのアクセスを制限すること。
+          -インタフェース: 明確なインタフェースを定義し、モジュール間の結合度を低く保つこと。
+          -拡張性: 将来的に機能追加や変更が容易に行えるよう、拡張性を考慮した設計であること。
+        -可読性に関する項目
+          -シンプルさ: 複雑なアルゴリズムは避け、可能な限りシンプルな実装にすること。
+          -命名: 変数名、関数名、クラス名などは、その役割を明確に表す命名であること。
+          -コメント: コードの意図が分かりにくい部分には、簡潔かつ正確なコメントを追加すること。
+          -フォーマット: インデント、空白、改行など、一貫したコーディングスタイルを適用すること。
+        -テストに関する項目
+          -テスト: 各関数やメソッドに対して、入出力の組み合わせを網羅する単体テストを作成すること。
+          -カバレッジ: コードの変更に対して、テストが適切に実行され、カバレッジが維持されること。
+        -セキュリティに関する項目
+          -入力検証: ユーザーからの入力に対して、不正なデータがシステムに侵入しないよう、厳密な入力検証を行うこと。
+          -脆弱性: SQLインジェクション、クロスサイトスクリプティングなど、一般的な脆弱性に対する対策を講じること。
+          -認証・認可: 適切な認証・認可メカニズムを導入し、不正アクセスを防ぐこと。
+        -その他
+          -パフォーマンス: 処理速度、メモリ使用量など、パフォーマンスに影響を与える要素について考慮すること。
+          -エラー処理: 例外処理やエラーログなど、エラー発生時の適切な対処を行うこと。
+          -ドキュメント: APIドキュメント、設計ドキュメントなど、必要なドキュメントを作成し、最新の状態に保つこと。
+        -コードレビューの観点
+          -設計: 上記の設計に関する項目に沿って、設計の妥当性を評価すること。
+          -実装: コードが設計どおりに実装されているか、また、より良い実装方法がないか検討すること。
+          -テスト: テストが十分に実行されており、コードの品質を担保しているか確認すること。
+          -スタイル: コーディングスタイルが統一されているか、可読性に問題がないか確認すること。
+          -セキュリティ: セキュリティに関するリスクがないか、脆弱性の可能性がないか確認すること。
+        -追加
+          -保守性: 将来的に修正や変更が必要になった場合に、容易に修正できるようなコードであること。
+          -再利用性: 他のプロジェクトでも利用できるような、汎用性の高いコードであること。
 
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +71,25 @@ jobs:
         uses: Codium-ai/pr-agent@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #config.model = "amazon.nova-pro-v1:0"
+          #config.model_turbo = "amazon.nova-lite-v1:0"
+          #config.fallback_models="amazon.nova-lite-v1:0"
+          config.model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0:0
+          config.model_turbo: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0:0
+          config.fallback_models: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0:0
           github_action.auto_review: "true"
           github_action.auto_describe: "true"
           github_action.auto_improve: "true"
+          pr_reviewer.inline_code_comments: true
+          pr_reviewer.extra_instructions: ${{ env.INSTRUCTIONS }}
+          pr_description.publish_labels: true
+          pr_description.add_original_user_description: true
+          pr_description.extra_instructions: 'You must always answer in Japanese.必ず日本語で回答してください。 Titles should have prefix of commitlint pattern such as `feat:`, `chore:`, `test:`, `fix:`, `ci:`, `docs:` etc'
+          pr_code_suggestions.extra_instructions: ${{ env.INSTRUCTIONS }}
+          pr_add_docs.extra_instructions: "You must always answer in Japanese.必ず日本語で回答してください。"
+          pr_update_changelog.extra_instructions: "You must always answer in Japanese.必ず日本語で回答してください。"
+          pr_test.extra_instructions: "You must always answer in Japanese.必ず日本語で回答してください。"
+          pr_improve_component.extra_instructions: "You must always answer in Japanese.必ず日本語で回答してください。"
+          pr_questions.extra_instructions: "You must always answer in Japanese.必ず日本語で回答してください。"
+          litellm.drop_params: true
+          ignore.glob: "['**/package-lock.json']"
